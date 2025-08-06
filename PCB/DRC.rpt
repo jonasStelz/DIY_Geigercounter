@@ -1,0 +1,68 @@
+** Drc report for geigerzähler_pcb.kicad_pcb **
+** Created on 2025-08-02T13:52:38+0200 **
+
+** Found 16 DRC violations **
+[starved_thermal]: Verbindung der thermischen Entlastung zur Zone unvollständig (Lage Front; Zone min. Speichenanzahl 2; tatsächlich 1)
+    Lokale Überschreibung; error
+    @(70,5000 mm, 100,5000 mm): Zone [+3.3V] auf Front, priority 1
+    @(200,5500 mm, 124,8720 mm): Pad 1 [+3.3V] von U1 auf Front
+[malformed_courtyard]: Footprint hat fehlerhafte Abstandsfläche (keine geschlossene Form)
+    Lokale Überschreibung; error
+    @(113,0000 mm, 129,1750 mm): Footprint C17
+[malformed_courtyard]: Footprint hat fehlerhafte Abstandsfläche (selbstüberschneidend)
+    Lokale Überschreibung; error
+    @(113,0000 mm, 129,1750 mm): Footprint C17
+[malformed_courtyard]: Footprint hat fehlerhafte Abstandsfläche (keine geschlossene Form)
+    Lokale Überschreibung; error
+    @(113,0000 mm, 129,1750 mm): Footprint C17
+[malformed_courtyard]: Footprint hat fehlerhafte Abstandsfläche (keine geschlossene Form)
+    Lokale Überschreibung; error
+    @(106,5000 mm, 130,5000 mm): Footprint C14
+[malformed_courtyard]: Footprint hat fehlerhafte Abstandsfläche (selbstüberschneidend)
+    Lokale Überschreibung; error
+    @(106,5000 mm, 130,5000 mm): Footprint C14
+[malformed_courtyard]: Footprint hat fehlerhafte Abstandsfläche (keine geschlossene Form)
+    Lokale Überschreibung; error
+    @(106,5000 mm, 130,5000 mm): Footprint C14
+[clearance]: Freiraum-Verstoß (Netzklasse "Default" Freiraum 0,1270 mm; tatsächlich 0,0964 mm)
+    Regel: Netzklasse "Default"; error
+    @(191,7500 mm, 132,7500 mm): Pad 1 [Net-(C16-Pad1)] von R26 auf Front
+    @(190,7068 mm, 132,3619 mm): Leiterbahn [Vbat_USB] auf Front, Länge 3,0298 mm
+[clearance]: Freiraum-Verstoß (Netzklasse "Default" Freiraum 0,1270 mm; tatsächlich 0,0915 mm)
+    Regel: Netzklasse "Default"; error
+    @(189,7500 mm, 132,7500 mm): Pad 2 [GM_OUT] von R26 auf Front
+    @(182,8185 mm, 133,6415 mm): Leiterbahn [Vbat_USB] auf Front, Länge 7,8883 mm
+[clearance]: Freiraum-Verstoß (Netzklasse "Default" Freiraum 0,1270 mm; tatsächlich 0,0592 mm)
+    Regel: Netzklasse "Default"; error
+    @(218,2500 mm, 124,9730 mm): Leiterbahn [VBUS] auf Back, Länge 1,0225 mm
+    @(219,3950 mm, 124,0700 mm): Durchsteckpad S1 [GND] von J3
+[clearance]: Freiraum-Verstoß (Netzklasse "Default" Freiraum 0,1270 mm; tatsächlich 0,0814 mm)
+    Regel: Netzklasse "Default"; error
+    @(219,3950 mm, 124,0700 mm): Durchsteckpad S1 [GND] von J3
+    @(218,2500 mm, 126,2500 mm): Leiterbahn [VBUS] auf Back, Länge 1,2770 mm
+[clearance]: Freiraum-Verstoß (Netzklasse "Default" Freiraum 0,1270 mm; tatsächlich 0,1030 mm)
+    Regel: Netzklasse "Default"; error
+    @(219,5980 mm, 119,2030 mm): Leiterbahn [D+] auf Front, Länge 0,5940 mm
+    @(218,8200 mm, 119,5000 mm): Pad A7 [D-] von J3 auf Front
+[hole_clearance]: Loch-Freiraum-Verstoß (Einschränkungen aus Platinenkonfiguration zu Löchern Freiraum 0,2500 mm; tatsächlich 0,1944 mm)
+    Regel: Einschränkungen aus Platinenkonfiguration zu Löchern; error
+    @(219,8950 mm, 122,6400 mm): NPTH-Pad von J3
+    @(218,8200 mm, 122,9500 mm): Pad A1 [GND] von J3 auf Front
+[hole_clearance]: Loch-Freiraum-Verstoß (Einschränkungen aus Platinenkonfiguration zu Löchern Freiraum 0,2500 mm; tatsächlich 0,1944 mm)
+    Regel: Einschränkungen aus Platinenkonfiguration zu Löchern; error
+    @(219,8950 mm, 122,6400 mm): NPTH-Pad von J3
+    @(218,8200 mm, 122,9500 mm): Pad B12 [GND] von J3 auf Front
+[hole_clearance]: Loch-Freiraum-Verstoß (Einschränkungen aus Platinenkonfiguration zu Löchern Freiraum 0,2500 mm; tatsächlich 0,1944 mm)
+    Regel: Einschränkungen aus Platinenkonfiguration zu Löchern; error
+    @(219,8950 mm, 116,8600 mm): NPTH-Pad von J3
+    @(218,8200 mm, 116,5500 mm): Pad A12 [GND] von J3 auf Front
+[hole_clearance]: Loch-Freiraum-Verstoß (Einschränkungen aus Platinenkonfiguration zu Löchern Freiraum 0,2500 mm; tatsächlich 0,1944 mm)
+    Regel: Einschränkungen aus Platinenkonfiguration zu Löchern; error
+    @(219,8950 mm, 116,8600 mm): NPTH-Pad von J3
+    @(218,8200 mm, 116,5500 mm): Pad B1 [GND] von J3 auf Front
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** End of Report **

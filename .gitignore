@@ -1,0 +1,59 @@
+# KiCad temporary and backup files
+*.bak
+*.kicad_sch-bak
+*.kicad_pcb-bak
+*-save.kicad_sch
+*-save.kicad_pcb
+*.tmp
+*.swp
+*.autosave
+*~
+
+# Simulation outputs
+*.raw
+*.log
+*.out
+
+# Plot and CAM outputs
+*.gbr
+*.gbo
+*.gbs
+*.gtl
+*.gts
+*.gto
+*.gml
+*.drl
+*.zip
+*.pdf
+*.svg
+*.ps
+
+# Netlist and BOM
+*.net
+*.csv
+*.xml
+
+# Cache and precompiled files
+*.cache.lib
+*.kicad_prl
+fp-info-cache
+
+# Project-specific libraries (optional)
+*.lib
+*.mod
+*.cmp
+sym-lib-table
+fp-lib-table
+
+# Editor config (optional)
+*.pro
+*.pro.user
+*.kicad_wks
+*.kicad_sym
+*.kicad_mod
+
+# Output directories
+production/
+output/
+build/
+gerbers/
