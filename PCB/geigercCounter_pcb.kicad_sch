@@ -2676,6 +2676,24 @@
 				(pin bidirectional line
 					(at 19.05 -27.94 180)
 					(length 2.54)
+					(name "GPIO9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "17"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 19.05 -40.64 180)
+					(length 2.54)
 					(name "GPIO10"
 						(effects
 							(font
@@ -2692,34 +2710,16 @@
 					)
 				)
 				(pin bidirectional line
-					(at 19.05 -40.64 180)
-					(length 2.54)
-					(name "GPIO11"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "19"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
 					(at 19.05 -53.34 180)
 					(length 2.54)
-					(name "GPIO3/ADC1_CH2"
+					(name "GPIO2/ADC1_CH1"
 						(effects
 							(font
 								(size 1.27 1.27)
 							)
 						)
 					)
-					(number "15"
+					(number "38"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2748,14 +2748,14 @@
 				(pin bidirectional line
 					(at 19.05 -58.42 180)
 					(length 2.54)
-					(name "GPIO9"
+					(name "GPIO11"
 						(effects
 							(font
 								(size 1.27 1.27)
 							)
 						)
 					)
-					(number "17"
+					(number "19"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2765,6 +2765,24 @@
 				)
 				(pin bidirectional line
 					(at 19.05 -60.96 180)
+					(length 2.54)
+					(name "GPIO3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "15"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 19.05 -63.5 180)
 					(length 2.54)
 					(name "GPIO12"
 						(effects
@@ -2807,24 +2825,6 @@
 						)
 					)
 					(number "12"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at 33.02 25.4 180)
-					(length 2.54)
-					(name "GPIO21"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "23"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2925,14 +2925,14 @@
 				(pin bidirectional line
 					(at 33.02 10.16 180)
 					(length 2.54)
-					(name "GPIO2"
+					(name "GPIO21"
 						(effects
 							(font
 								(size 1.27 1.27)
 							)
 						)
 					)
-					(number "38"
+					(number "23"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -4689,6 +4689,176 @@
 				(pin passive line
 					(at 3.81 0 180)
 					(length 2.54)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:D_Small"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.254)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "D"
+				(at -1.27 2.032 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "D_Small"
+				(at -3.81 -2.032 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Diode, small symbol"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Sim.Device" "D"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Sim.Pins" "1=K 2=A"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "diode"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "D_Small_0_1"
+				(polyline
+					(pts
+						(xy -0.762 0) (xy 0.762 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.762 -1.016) (xy -0.762 1.016)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 -1.016) (xy -0.762 0) (xy 0.762 1.016) (xy 0.762 -1.016)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "D_Small_1_1"
+				(pin passive line
+					(at -2.54 0 0)
+					(length 1.778)
+					(name "K"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 0 180)
+					(length 1.778)
 					(name "A"
 						(effects
 							(font
@@ -10318,6 +10488,12 @@
 		(uuid "a133f231-7e48-406e-abce-7642e27c9d95")
 	)
 	(junction
+		(at 187.96 66.04)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a34b519a-eaec-4d8d-8db8-6c2f1f24cdcf")
+	)
+	(junction
 		(at 44.45 257.81)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -10486,14 +10662,16 @@
 		(uuid "f2ed19c9-ad2f-4419-bf37-fb9bfb39d8ce")
 	)
 	(junction
+		(at 212.09 199.39)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "f6b9b391-965a-415a-b2c5-5da5190a757c")
+	)
+	(junction
 		(at 29.21 72.39)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "fc79cccb-fe8c-48aa-bc77-79a6121462d5")
-	)
-	(no_connect
-		(at 495.3 -2.54)
-		(uuid "072b400b-7faf-4d4a-a8e8-3e0fb5dcd749")
 	)
 	(no_connect
 		(at 495.3 40.64)
@@ -10530,10 +10708,6 @@
 	(no_connect
 		(at 495.3 38.1)
 		(uuid "67139246-48b9-468d-bbee-106eef38a965")
-	)
-	(no_connect
-		(at 495.3 2.54)
-		(uuid "73d5bd9a-bfbd-4a04-a00f-29fd68375d6b")
 	)
 	(no_connect
 		(at 495.3 48.26)
@@ -10753,6 +10927,16 @@
 	)
 	(wire
 		(pts
+			(xy 33.02 252.73) (xy 64.77 252.73)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0a410eaf-5240-4921-87b4-c310ed73d8ad")
+	)
+	(wire
+		(pts
 			(xy 68.58 123.19) (xy 68.58 133.35)
 		)
 		(stroke
@@ -10850,16 +11034,6 @@
 			(type default)
 		)
 		(uuid "126b9907-9e68-47a7-ab8d-a731859ee279")
-	)
-	(wire
-		(pts
-			(xy 33.02 250.19) (xy 64.77 250.19)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "137fff65-7239-42f5-b1a1-b55ae0a71276")
 	)
 	(wire
 		(pts
@@ -11040,16 +11214,6 @@
 			(type default)
 		)
 		(uuid "20e2cb5a-239a-4beb-b248-ae6a92186a6e")
-	)
-	(wire
-		(pts
-			(xy 33.02 242.57) (xy 64.77 242.57)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "223bdd68-b02b-4ab8-8cd8-d915b66706c0")
 	)
 	(wire
 		(pts
@@ -11350,6 +11514,16 @@
 			(type default)
 		)
 		(uuid "343c68dd-9058-4eec-bacc-c84ac6a65fd3")
+	)
+	(wire
+		(pts
+			(xy 212.09 199.39) (xy 218.44 199.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "343f8ed0-984e-4fcc-907a-fe072def16a2")
 	)
 	(wire
 		(pts
@@ -11983,16 +12157,6 @@
 	)
 	(wire
 		(pts
-			(xy 33.02 245.11) (xy 64.77 245.11)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5ae1394f-047d-45d1-a18c-30f3a040ff46")
-	)
-	(wire
-		(pts
 			(xy 139.7 60.96) (xy 152.4 60.96)
 		)
 		(stroke
@@ -12120,6 +12284,16 @@
 			(type default)
 		)
 		(uuid "6406f9a1-8cc1-4ae2-87fa-cdb48f44f609")
+	)
+	(wire
+		(pts
+			(xy 33.02 245.11) (xy 64.77 245.11)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6453d58c-83d0-424d-8a8e-4072b3806a43")
 	)
 	(wire
 		(pts
@@ -12260,6 +12434,16 @@
 			(type default)
 		)
 		(uuid "6aaa9db4-17f0-4d7e-966e-3a4b36c00971")
+	)
+	(wire
+		(pts
+			(xy 187.96 60.96) (xy 187.96 66.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6b8d55bf-9c82-43fe-9d4d-a1b500bc4e5a")
 	)
 	(wire
 		(pts
@@ -12640,6 +12824,16 @@
 			(type default)
 		)
 		(uuid "89431a9e-db47-45b4-98a8-3e08965b8383")
+	)
+	(wire
+		(pts
+			(xy 212.09 193.04) (xy 212.09 194.31)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "89bec266-55cf-41ba-9d84-4eaba6df1295")
 	)
 	(wire
 		(pts
@@ -13043,6 +13237,16 @@
 	)
 	(wire
 		(pts
+			(xy 223.52 199.39) (xy 224.79 199.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a6679a31-b43b-4d00-bb1a-f981f42835db")
+	)
+	(wire
+		(pts
 			(xy 345.44 218.44) (xy 354.33 218.44)
 		)
 		(stroke
@@ -13223,16 +13427,6 @@
 	)
 	(wire
 		(pts
-			(xy 64.77 252.73) (xy 33.02 252.73)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b376e003-1b62-4677-9cd4-8a23049ef828")
-	)
-	(wire
-		(pts
 			(xy 196.85 60.96) (xy 210.82 60.96)
 		)
 		(stroke
@@ -13280,6 +13474,16 @@
 			(type default)
 		)
 		(uuid "baad5155-7d30-4854-9cdb-02c4c2fe5a19")
+	)
+	(wire
+		(pts
+			(xy 33.02 242.57) (xy 64.77 242.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bae3e228-7fb7-4a5f-85b8-70614b8cd05d")
 	)
 	(wire
 		(pts
@@ -13453,16 +13657,6 @@
 	)
 	(wire
 		(pts
-			(xy 190.5 199.39) (xy 196.85 199.39)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c80a9137-bc66-4181-9c58-bfbd2ea01f08")
-	)
-	(wire
-		(pts
 			(xy 214.63 140.97) (xy 219.71 140.97)
 		)
 		(stroke
@@ -13470,6 +13664,16 @@
 			(type default)
 		)
 		(uuid "c937bfde-a5e2-4fc8-a9b6-548e54d6cb7d")
+	)
+	(wire
+		(pts
+			(xy 190.5 199.39) (xy 212.09 199.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c96ff172-53c0-4eae-a01a-d51c7eff3461")
 	)
 	(wire
 		(pts
@@ -13540,6 +13744,16 @@
 			(type default)
 		)
 		(uuid "cdc0ccb5-6fd0-42a0-b1ee-da8eaf8876ab")
+	)
+	(wire
+		(pts
+			(xy 190.5 201.93) (xy 196.85 201.93)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ce0e629d-4465-4412-8ea6-7c58c1d9b799")
 	)
 	(wire
 		(pts
@@ -13753,6 +13967,16 @@
 	)
 	(wire
 		(pts
+			(xy 33.02 250.19) (xy 64.77 250.19)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d94acb9a-9ff7-49ee-8d10-d43d8e6bcd97")
+	)
+	(wire
+		(pts
 			(xy 214.63 153.67) (xy 214.63 156.21)
 		)
 		(stroke
@@ -13760,6 +13984,16 @@
 			(type default)
 		)
 		(uuid "d9aee0ba-d5e1-4821-8415-dbdbeb8304e9")
+	)
+	(wire
+		(pts
+			(xy 33.02 247.65) (xy 64.77 247.65)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dae6efa1-822a-4043-ab3d-11783afc5b44")
 	)
 	(wire
 		(pts
@@ -14233,16 +14467,6 @@
 	)
 	(wire
 		(pts
-			(xy 33.02 247.65) (xy 64.77 247.65)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "fbcd4341-e6f1-4079-849a-2a33576ac218")
-	)
-	(wire
-		(pts
 			(xy 92.71 138.43) (xy 92.71 144.78)
 		)
 		(stroke
@@ -14353,9 +14577,9 @@
 			)
 		)
 	)
-	(global_label "GPIO8"
+	(global_label "GPIO1"
 		(shape input)
-		(at 64.77 242.57 0)
+		(at 64.77 250.19 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -14365,7 +14589,7 @@
 		)
 		(uuid "0d8c97cc-dbe8-41cd-8baf-0e6a98f53633")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 73.44 242.57 0)
+			(at 73.44 250.19 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14377,7 +14601,7 @@
 	)
 	(global_label "Vhigh{slash}100"
 		(shape input)
-		(at 64.77 245.11 0)
+		(at 64.77 247.65 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -14387,7 +14611,7 @@
 		)
 		(uuid "19fffaf9-ab78-4af7-9cca-30497ffa78ea")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 77.8546 245.11 0)
+			(at 77.8546 247.65 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14485,7 +14709,7 @@
 			)
 		)
 	)
-	(global_label "GPIO9"
+	(global_label "GPIO11"
 		(shape input)
 		(at 196.85 196.85 0)
 		(fields_autoplaced yes)
@@ -14497,7 +14721,7 @@
 		)
 		(uuid "34fcec38-c2e1-44f1-b75c-6b0ee2c7896c")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 205.52 196.85 0)
+			(at 206.7295 196.85 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14595,6 +14819,28 @@
 			)
 		)
 	)
+	(global_label "GPIO3"
+		(shape input)
+		(at 187.96 60.96 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "45d06c82-a92d-4233-b7e7-13bc3046fbde")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 196.63 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "GM_OUT"
 		(shape input)
 		(at 64.77 252.73 0)
@@ -14617,7 +14863,7 @@
 			)
 		)
 	)
-	(global_label "GPIO12"
+	(global_label "GPIO11"
 		(shape input)
 		(at 322.58 227.33 180)
 		(fields_autoplaced yes)
@@ -14635,6 +14881,28 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GPIO3"
+		(shape input)
+		(at 224.79 199.39 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "776b3e8c-8071-44db-bdb0-50f591f011f6")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 233.46 199.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
 				(hide yes)
 			)
 		)
@@ -14663,7 +14931,7 @@
 	)
 	(global_label "GPIO12"
 		(shape input)
-		(at 196.85 199.39 0)
+		(at 196.85 201.93 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -14673,7 +14941,7 @@
 		)
 		(uuid "7e464b07-562d-4749-ba2f-dfcb57198c22")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 206.7295 199.39 0)
+			(at 206.7295 201.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14749,7 +15017,7 @@
 			)
 		)
 	)
-	(global_label "GPIO9"
+	(global_label "GPIO12"
 		(shape input)
 		(at 276.86 81.28 180)
 		(fields_autoplaced yes)
@@ -14761,7 +15029,7 @@
 		)
 		(uuid "9054f03d-a229-4415-84dc-f74e562fb416")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 268.19 81.28 0)
+			(at 266.9805 81.28 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14861,7 +15129,7 @@
 	)
 	(global_label "Trig_HV"
 		(shape input)
-		(at 64.77 247.65 0)
+		(at 64.77 245.11 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -14871,7 +15139,7 @@
 		)
 		(uuid "ab673c85-9b65-40e8-aaf2-ceece5861c08")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 74.6495 247.65 0)
+			(at 74.6495 245.11 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14993,7 +15261,7 @@
 	)
 	(global_label "I_L_HV"
 		(shape input)
-		(at 64.77 250.19 0)
+		(at 64.77 242.57 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -15003,7 +15271,7 @@
 		)
 		(uuid "da921640-234d-47d3-9aff-2c2d70f15a5c")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 73.7424 250.19 0)
+			(at 73.7424 242.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15273,7 +15541,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "034c8d17-6787-44db-b46b-e311fda68cc0")
-		(property "Reference" "#PWR054"
+		(property "Reference" "#PWR055"
 			(at 294.64 100.33 0)
 			(effects
 				(font
@@ -15323,7 +15591,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR054")
+					(reference "#PWR055")
 					(unit 1)
 				)
 			)
@@ -15339,7 +15607,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "03586d3b-44e3-4e38-8536-9362dfc89adc")
-		(property "Reference" "#PWR047"
+		(property "Reference" "#PWR048"
 			(at 238.76 163.83 0)
 			(effects
 				(font
@@ -15389,7 +15657,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR047")
+					(reference "#PWR048")
 					(unit 1)
 				)
 			)
@@ -15471,7 +15739,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "06d45b26-c644-446f-81b8-f92e9296d027")
-		(property "Reference" "#PWR060"
+		(property "Reference" "#PWR061"
 			(at 354.33 208.28 0)
 			(effects
 				(font
@@ -15521,7 +15789,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR060")
+					(reference "#PWR061")
 					(unit 1)
 				)
 			)
@@ -15537,7 +15805,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0899395e-7055-4d91-a930-5927e091869f")
-		(property "Reference" "R28"
+		(property "Reference" "R29"
 			(at 347.98 212.0899 0)
 			(effects
 				(font
@@ -15591,7 +15859,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "R28")
+					(reference "R29")
 					(unit 1)
 				)
 			)
@@ -16534,7 +16802,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1e55bcbc-c241-489d-8730-d52a534101fe")
-		(property "Reference" "R24"
+		(property "Reference" "R25"
 			(at 328.93 64.77 90)
 			(effects
 				(font
@@ -16586,7 +16854,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "R24")
+					(reference "R25")
 					(unit 1)
 				)
 			)
@@ -16602,7 +16870,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1e7e73bf-4624-40ef-8619-5030b800e9b2")
-		(property "Reference" "R27"
+		(property "Reference" "R28"
 			(at 337.82 173.9899 0)
 			(effects
 				(font
@@ -16656,7 +16924,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "R27")
+					(reference "R28")
 					(unit 1)
 				)
 			)
@@ -16838,7 +17106,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "226a9e4d-ab00-4b1c-be21-dc3c78609a9a")
-		(property "Reference" "#PWR048"
+		(property "Reference" "#PWR049"
 			(at 252.73 119.38 0)
 			(effects
 				(font
@@ -16888,7 +17156,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR048")
+					(reference "#PWR049")
 					(unit 1)
 				)
 			)
@@ -16904,7 +17172,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "226e858e-2984-42e8-8d4d-24e990a9fbab")
-		(property "Reference" "#PWR056"
+		(property "Reference" "#PWR057"
 			(at 308.61 91.44 0)
 			(effects
 				(font
@@ -16954,7 +17222,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR056")
+					(reference "#PWR057")
 					(unit 1)
 				)
 			)
@@ -16970,7 +17238,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "22bfaa75-c37f-4c67-98d9-8d1013756b60")
-		(property "Reference" "R19"
+		(property "Reference" "R20"
 			(at 255.27 106.6799 0)
 			(effects
 				(font
@@ -17024,7 +17292,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "R19")
+					(reference "R20")
 					(unit 1)
 				)
 			)
@@ -17040,7 +17308,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "232e7615-f45c-479a-88d6-285a3484c82d")
-		(property "Reference" "R32"
+		(property "Reference" "R33"
 			(at 377.19 74.9299 0)
 			(effects
 				(font
@@ -17067,7 +17335,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.at/ProductDetail/YAGEO/AC0805DR-071ML?qs=r5DSvlrkXmJEKNZJOwnykA%3D%3D"
+		(property "Datasheet" "https://www.mouser.at/ProductDetail/YAGEO/RV0805FR-071ML?qs=cGU37fGUGy%2FzvZIiPybItQ%3D%3D"
 			(at 374.65 76.2 0)
 			(effects
 				(font
@@ -17094,7 +17362,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "R32")
+					(reference "R33")
 					(unit 1)
 				)
 			)
@@ -17110,16 +17378,16 @@
 		(dnp no)
 		(uuid "23d52f6c-0da3-4aa6-bd50-4d675f997ef5")
 		(property "Reference" "D8"
-			(at 85.09 58.928 90)
+			(at 87.376 58.42 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify right)
+				(justify left)
 			)
 		)
 		(property "Value" "SZESD5Z5.0T1G"
-			(at 89.916 70.358 0)
+			(at 91.948 69.088 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17311,7 +17579,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2c24a6f9-5300-4f14-b485-365b8c58af19")
-		(property "Reference" "#PWR063"
+		(property "Reference" "#PWR064"
 			(at 356.87 189.23 0)
 			(effects
 				(font
@@ -17361,7 +17629,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR063")
+					(reference "#PWR064")
 					(unit 1)
 				)
 			)
@@ -17377,7 +17645,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2cebc0ed-7951-4ccb-8731-223da14074d5")
-		(property "Reference" "#PWR042"
+		(property "Reference" "#PWR043"
 			(at 231.14 170.18 0)
 			(effects
 				(font
@@ -17427,7 +17695,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR042")
+					(reference "#PWR043")
 					(unit 1)
 				)
 			)
@@ -17957,7 +18225,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "39d016de-d6f3-47d5-b32d-8af097c8107c")
-		(property "Reference" "R33"
+		(property "Reference" "R34"
 			(at 377.19 86.3599 0)
 			(effects
 				(font
@@ -18011,7 +18279,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "R33")
+					(reference "R34")
 					(unit 1)
 				)
 			)
@@ -18312,7 +18580,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3e012f5a-9b4d-4147-afee-a8484fb127b1")
-		(property "Reference" "R29"
+		(property "Reference" "R30"
 			(at 359.41 151.1299 0)
 			(effects
 				(font
@@ -18366,7 +18634,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "R29")
+					(reference "R30")
 					(unit 1)
 				)
 			)
@@ -18382,7 +18650,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3e16cd41-6268-48bd-8381-4fe7c99fbc36")
-		(property "Reference" "R31"
+		(property "Reference" "R32"
 			(at 377.19 69.8499 0)
 			(effects
 				(font
@@ -18409,7 +18677,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.at/ProductDetail/YAGEO/AC0805DR-071ML?qs=r5DSvlrkXmJEKNZJOwnykA%3D%3D"
+		(property "Datasheet" "https://www.mouser.at/ProductDetail/YAGEO/RV0805FR-071ML?qs=cGU37fGUGy%2FzvZIiPybItQ%3D%3D"
 			(at 374.65 71.12 0)
 			(effects
 				(font
@@ -18436,7 +18704,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "R31")
+					(reference "R32")
 					(unit 1)
 				)
 			)
@@ -18518,7 +18786,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4159d85b-1203-411c-8d8e-bb27067c0bf1")
-		(property "Reference" "R30"
+		(property "Reference" "R31"
 			(at 377.19 64.7699 0)
 			(effects
 				(font
@@ -18545,7 +18813,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.at/ProductDetail/YAGEO/AC0805DR-071ML?qs=r5DSvlrkXmJEKNZJOwnykA%3D%3D"
+		(property "Datasheet" "https://www.mouser.at/ProductDetail/YAGEO/RV0805FR-071ML?qs=cGU37fGUGy%2FzvZIiPybItQ%3D%3D"
 			(at 374.65 66.04 0)
 			(effects
 				(font
@@ -18572,7 +18840,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "R30")
+					(reference "R31")
 					(unit 1)
 				)
 			)
@@ -18588,7 +18856,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4324e26b-8d2b-491e-9cb8-9aae39da2df0")
-		(property "Reference" "D18"
+		(property "Reference" "D19"
 			(at 353.06 19.05 0)
 			(effects
 				(font
@@ -18640,7 +18908,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "D18")
+					(reference "D19")
 					(unit 1)
 				)
 			)
@@ -18655,7 +18923,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "45777b74-67f5-4df6-ae1b-a2d5d953b0d6")
-		(property "Reference" "R17"
+		(property "Reference" "R18"
 			(at 220.472 76.454 90)
 			(effects
 				(font
@@ -18707,7 +18975,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "R17")
+					(reference "R18")
 					(unit 1)
 				)
 			)
@@ -18723,7 +18991,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "47f21c31-ea5c-40e9-9a71-d5c22b8fd105")
-		(property "Reference" "#PWR065"
+		(property "Reference" "#PWR066"
 			(at 374.65 105.41 0)
 			(effects
 				(font
@@ -18773,7 +19041,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR065")
+					(reference "#PWR066")
 					(unit 1)
 				)
 			)
@@ -18789,7 +19057,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4911b060-1f41-495a-90e7-6e4dc214c116")
-		(property "Reference" "D14"
+		(property "Reference" "D15"
 			(at 292.1 19.05 0)
 			(effects
 				(font
@@ -18841,7 +19109,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "D14")
+					(reference "D15")
 					(unit 1)
 				)
 			)
@@ -19012,7 +19280,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "50ec396d-cbd1-4a17-9012-506b8b276fcc")
-		(property "Reference" "D17"
+		(property "Reference" "D18"
 			(at 350.52 54.61 0)
 			(effects
 				(font
@@ -19082,7 +19350,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "D17")
+					(reference "D18")
 					(unit 1)
 				)
 			)
@@ -19353,6 +19621,91 @@
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
 					(reference "D6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:D_Small")
+		(at 220.98 199.39 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "5552c0c5-57a7-4802-be46-535508a93224")
+		(property "Reference" "D13"
+			(at 222.504 193.548 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "D_Small"
+			(at 222.758 195.834 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SOD-323_HandSoldering"
+			(at 220.98 199.39 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://jlcpcb.com/partdetail/2485-1N4148WS/C2128"
+			(at 220.98 199.39 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Diode, small symbol"
+			(at 220.98 199.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" "D"
+			(at 220.98 199.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" "1=K 2=A"
+			(at 220.98 199.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "a2897e3e-fe4f-4e47-b4c5-a0505d971a32")
+		)
+		(pin "1"
+			(uuid "93d6938d-797b-4974-9c06-e51c9292578b")
+		)
+		(instances
+			(project ""
+				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
+					(reference "D13")
 					(unit 1)
 				)
 			)
@@ -20236,7 +20589,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6963d159-e6b8-4d49-8733-3722748c4b0c")
-		(property "Reference" "R25"
+		(property "Reference" "R26"
 			(at 334.01 222.25 90)
 			(effects
 				(font
@@ -20288,7 +20641,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "R25")
+					(reference "R26")
 					(unit 1)
 				)
 			)
@@ -20370,7 +20723,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6b92d352-3e81-4229-b6b9-737adacfa838")
-		(property "Reference" "#PWR044"
+		(property "Reference" "#PWR045"
 			(at 232.41 66.04 0)
 			(effects
 				(font
@@ -20420,7 +20773,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR044")
+					(reference "#PWR045")
 					(unit 1)
 				)
 			)
@@ -20637,7 +20990,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "7bad1938-a101-4b5e-af2a-5842fc8c4b67")
-		(property "Reference" "R16"
+		(property "Reference" "R17"
 			(at 220.98 68.834 90)
 			(effects
 				(font
@@ -20689,7 +21042,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "R16")
+					(reference "R17")
 					(unit 1)
 				)
 			)
@@ -20977,7 +21330,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "88e9c4d9-7a11-41b7-8295-76a49769fdf0")
-		(property "Reference" "R22"
+		(property "Reference" "R23"
 			(at 289.56 149.86 90)
 			(effects
 				(font
@@ -21029,7 +21382,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "R22")
+					(reference "R23")
 					(unit 1)
 				)
 			)
@@ -21045,7 +21398,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8abbdec2-51fd-44e2-a213-178bbd673e03")
-		(property "Reference" "#PWR045"
+		(property "Reference" "#PWR046"
 			(at 237.49 57.15 0)
 			(effects
 				(font
@@ -21095,7 +21448,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR045")
+					(reference "#PWR046")
 					(unit 1)
 				)
 			)
@@ -21245,7 +21598,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8f479748-8579-4df2-8db9-2f51c071122a")
-		(property "Reference" "#PWR043"
+		(property "Reference" "#PWR044"
 			(at 231.14 182.88 0)
 			(effects
 				(font
@@ -21295,7 +21648,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR043")
+					(reference "#PWR044")
 					(unit 1)
 				)
 			)
@@ -21377,7 +21730,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "920d4617-8715-4cf8-a3d5-d8b2dfbba7f6")
-		(property "Reference" "R20"
+		(property "Reference" "R21"
 			(at 275.59 149.86 90)
 			(effects
 				(font
@@ -21402,7 +21755,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.at/ProductDetail/YAGEO/AC0805DR-071ML?qs=r5DSvlrkXmJEKNZJOwnykA%3D%3D"
+		(property "Datasheet" "https://www.mouser.at/ProductDetail/YAGEO/RV0805FR-071ML?qs=cGU37fGUGy%2FzvZIiPybItQ%3D%3D"
 			(at 275.59 154.94 0)
 			(effects
 				(font
@@ -21429,7 +21782,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "R20")
+					(reference "R21")
 					(unit 1)
 				)
 			)
@@ -21445,7 +21798,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "937b3911-3458-43f3-b1fb-2f1a396c1a20")
-		(property "Reference" "#PWR058"
+		(property "Reference" "#PWR059"
 			(at 335.28 189.23 0)
 			(effects
 				(font
@@ -21495,7 +21848,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR058")
+					(reference "#PWR059")
 					(unit 1)
 				)
 			)
@@ -21643,7 +21996,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "95544651-263a-4c0f-90e9-ebdbb5a83948")
-		(property "Reference" "#PWR041"
+		(property "Reference" "#PWR042"
 			(at 231.14 25.4 0)
 			(effects
 				(font
@@ -21693,7 +22046,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR041")
+					(reference "#PWR042")
 					(unit 1)
 				)
 			)
@@ -21775,7 +22128,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9800d9df-6f91-415f-828f-c3b932b2d058")
-		(property "Reference" "#PWR062"
+		(property "Reference" "#PWR063"
 			(at 356.87 148.59 0)
 			(effects
 				(font
@@ -21825,7 +22178,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR062")
+					(reference "#PWR063")
 					(unit 1)
 				)
 			)
@@ -21841,7 +22194,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9818281a-bfb6-47dd-8401-ac545b6559c9")
-		(property "Reference" "D16"
+		(property "Reference" "D17"
 			(at 331.47 19.05 0)
 			(effects
 				(font
@@ -21893,7 +22246,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "D16")
+					(reference "D17")
 					(unit 1)
 				)
 			)
@@ -21978,7 +22331,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "98a95610-af04-4234-9da0-0eb29d7fd40e")
-		(property "Reference" "#PWR051"
+		(property "Reference" "#PWR052"
 			(at 271.78 60.96 0)
 			(effects
 				(font
@@ -22028,7 +22381,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR051")
+					(reference "#PWR052")
 					(unit 1)
 				)
 			)
@@ -22095,6 +22448,75 @@
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
 					(reference "#PWR017")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_Small")
+		(at 212.09 196.85 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "9d41d0d2-150a-43a4-9193-f4b960570c43")
+		(property "Reference" "R15"
+			(at 213.868 194.818 0)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10k"
+			(at 213.868 197.358 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+			(at 212.09 196.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://jlcpcb.com/partdetail/18102-0805W8F1002T5E/C17414"
+			(at 212.09 196.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, small symbol"
+			(at 212.09 196.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5a8378e7-6e95-4b98-9b0e-76bb60587ea4")
+		)
+		(pin "2"
+			(uuid "22c70b79-f1a9-4057-ba09-74348266af12")
+		)
+		(instances
+			(project "geigerzähler_pcb"
+				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
+					(reference "R15")
 					(unit 1)
 				)
 			)
@@ -22179,8 +22601,8 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a0443a50-249f-449d-9011-34ddb3dbff90")
-		(property "Reference" "R21"
-			(at 287.02 78.7399 0)
+		(property "Reference" "R22"
+			(at 286.258 87.63 0)
 			(effects
 				(font
 					(size 1.016 1.016)
@@ -22188,8 +22610,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100k"
-			(at 287.02 81.2799 0)
+		(property "Value" "10k"
+			(at 286.258 90.17 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -22206,7 +22628,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://jlcpcb.com/partdetail/160838-0805W8F1003T5E/C149504"
+		(property "Datasheet" "https://jlcpcb.com/partdetail/18102-0805W8F1002T5E/C17414"
 			(at 284.48 88.9 0)
 			(effects
 				(font
@@ -22233,7 +22655,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "R21")
+					(reference "R22")
 					(unit 1)
 				)
 			)
@@ -22370,6 +22792,72 @@
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
 					(reference "SW5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3.3V")
+		(at 212.09 193.04 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a648df04-6218-42a8-9205-432a57163742")
+		(property "Reference" "#PWR041"
+			(at 212.09 196.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3.3V"
+			(at 212.09 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 212.09 193.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 212.09 193.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
+			(at 212.09 193.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "2f336c84-6d80-41cc-acee-33d99c9385bd")
+		)
+		(instances
+			(project "geigerzähler_pcb"
+				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
+					(reference "#PWR041")
 					(unit 1)
 				)
 			)
@@ -22586,7 +23074,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "abd33dd4-bbfb-4124-b8ab-f5c52da589ea")
-		(property "Reference" "R15"
+		(property "Reference" "R16"
 			(at 220.726 63.754 90)
 			(effects
 				(font
@@ -22638,7 +23126,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "R15")
+					(reference "R16")
 					(unit 1)
 				)
 			)
@@ -22724,7 +23212,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b0187205-3871-4c7b-9bc1-3bfd104e7a3a")
-		(property "Reference" "D15"
+		(property "Reference" "D16"
 			(at 311.15 19.05 0)
 			(effects
 				(font
@@ -22776,7 +23264,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "D15")
+					(reference "D16")
 					(unit 1)
 				)
 			)
@@ -23062,7 +23550,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b2d73926-7cd8-4ccd-a3d8-998213efd943")
-		(property "Reference" "R26"
+		(property "Reference" "R27"
 			(at 337.82 161.2899 0)
 			(effects
 				(font
@@ -23116,7 +23604,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "R26")
+					(reference "R27")
 					(unit 1)
 				)
 			)
@@ -23269,7 +23757,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b336f1e3-3adf-434b-90c4-1762a5a8e9e1")
-		(property "Reference" "#PWR061"
+		(property "Reference" "#PWR062"
 			(at 354.33 241.3 0)
 			(effects
 				(font
@@ -23319,7 +23807,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR061")
+					(reference "#PWR062")
 					(unit 1)
 				)
 			)
@@ -23550,7 +24038,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "bbc231fc-410a-4479-85b2-528924767b82")
-		(property "Reference" "#PWR055"
+		(property "Reference" "#PWR056"
 			(at 308.61 57.15 0)
 			(effects
 				(font
@@ -23600,7 +24088,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR055")
+					(reference "#PWR056")
 					(unit 1)
 				)
 			)
@@ -23616,7 +24104,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "bdcc76bf-60b9-4130-9b75-edcbe882e3ea")
-		(property "Reference" "#PWR057"
+		(property "Reference" "#PWR058"
 			(at 320.04 189.23 0)
 			(effects
 				(font
@@ -23666,7 +24154,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR057")
+					(reference "#PWR058")
 					(unit 1)
 				)
 			)
@@ -23682,7 +24170,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "bdd96b3b-81a8-48b6-9d05-97aa019d74da")
-		(property "Reference" "#PWR052"
+		(property "Reference" "#PWR053"
 			(at 281.94 173.99 0)
 			(effects
 				(font
@@ -23732,7 +24220,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR052")
+					(reference "#PWR053")
 					(unit 1)
 				)
 			)
@@ -23748,7 +24236,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c1480727-1b3d-4892-a282-eb46b93aadf5")
-		(property "Reference" "#PWR046"
+		(property "Reference" "#PWR047"
 			(at 238.76 139.7 0)
 			(effects
 				(font
@@ -23798,7 +24286,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR046")
+					(reference "#PWR047")
 					(unit 1)
 				)
 			)
@@ -24116,7 +24604,7 @@
 		(dnp no)
 		(uuid "c9064fc6-6909-4eb4-9d9d-d36b5145cf08")
 		(property "Reference" "D10"
-			(at 192.278 62.992 0)
+			(at 193.548 63.5 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -24124,7 +24612,7 @@
 			)
 		)
 		(property "Value" "USB Power"
-			(at 199.644 62.992 0)
+			(at 200.914 63.754 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -24419,7 +24907,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d0376cd3-6bd4-4767-a731-eb07526008f1")
-		(property "Reference" "#PWR049"
+		(property "Reference" "#PWR050"
 			(at 259.08 140.97 0)
 			(effects
 				(font
@@ -24469,7 +24957,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR049")
+					(reference "#PWR050")
 					(unit 1)
 				)
 			)
@@ -24634,7 +25122,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d3cff5a4-052d-4f2c-a363-d7ddfbf1fe99")
-		(property "Reference" "#PWR050"
+		(property "Reference" "#PWR051"
 			(at 265.43 36.83 0)
 			(effects
 				(font
@@ -24684,7 +25172,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR050")
+					(reference "#PWR051")
 					(unit 1)
 				)
 			)
@@ -24770,7 +25258,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d5ef4cb5-9081-4eee-8b89-8562d6323e25")
-		(property "Reference" "D13"
+		(property "Reference" "D14"
 			(at 273.05 19.05 0)
 			(effects
 				(font
@@ -24822,7 +25310,7 @@
 		(instances
 			(project "geigerzähler_pcb"
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "D13")
+					(reference "D14")
 					(unit 1)
 				)
 			)
@@ -24908,7 +25396,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "dc039828-235e-4df5-b728-157804869aec")
-		(property "Reference" "#PWR053"
+		(property "Reference" "#PWR054"
 			(at 284.48 100.33 0)
 			(effects
 				(font
@@ -24958,7 +25446,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR053")
+					(reference "#PWR054")
 					(unit 1)
 				)
 			)
@@ -25386,7 +25874,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ed25dff0-f68e-49b7-81cf-467bb4871d8c")
-		(property "Reference" "R18"
+		(property "Reference" "R19"
 			(at 255.27 40.6399 0)
 			(effects
 				(font
@@ -25440,7 +25928,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "R18")
+					(reference "R19")
 					(unit 1)
 				)
 			)
@@ -25929,7 +26417,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f5c9e218-856f-46be-bcb7-3785d64886d1")
-		(property "Reference" "#PWR064"
+		(property "Reference" "#PWR065"
 			(at 374.65 55.88 0)
 			(effects
 				(font
@@ -25979,7 +26467,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR064")
+					(reference "#PWR065")
 					(unit 1)
 				)
 			)
@@ -26249,7 +26737,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "f9e1e553-8a59-4f54-95c4-0ecdc28f513d")
-		(property "Reference" "R23"
+		(property "Reference" "R24"
 			(at 320.04 34.29 90)
 			(effects
 				(font
@@ -26274,7 +26762,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.at/ProductDetail/Panasonic/ERJ-P06J8R2V?qs=iIVTEDlrHA1%252Bln5MoDoqDg%3D%3D"
+		(property "Datasheet" "https://www.mouser.at/ProductDetail/ROHM-Semiconductor/ESR10EZPF8R20?qs=vvQtp7zwQdOjvumzm5Qsqg%3D%3D"
 			(at 320.04 39.37 0)
 			(effects
 				(font
@@ -26301,7 +26789,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "R23")
+					(reference "R24")
 					(unit 1)
 				)
 			)
@@ -26383,7 +26871,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "fad704bc-d8a5-4cc3-9ec8-011ad8ab4052")
-		(property "Reference" "#PWR059"
+		(property "Reference" "#PWR060"
 			(at 347.98 95.25 0)
 			(effects
 				(font
@@ -26433,7 +26921,7 @@
 		(instances
 			(project ""
 				(path "/cf725e1e-0c25-4cd8-a0bd-f54e2b4870c1"
-					(reference "#PWR059")
+					(reference "#PWR060")
 					(unit 1)
 				)
 			)
