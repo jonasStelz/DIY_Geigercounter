@@ -1,4 +1,6 @@
-# KiCad temporary and backup files
+# ==========================================
+# KiCad - Temporäre Dateien & Backups
+# ==========================================
 *.bak
 *.kicad_sch-bak
 *.kicad_pcb-bak
@@ -8,13 +10,23 @@
 *.swp
 *.autosave
 *~
+~*
+*.lck
+*pcb-backups/
 
-# Simulation outputs
+# ==========================================
+# KiCad - Simulationen, Netzlisten & BOM
+# ==========================================
 *.raw
 *.log
 *.out
+*.net
+*.csv
+*.xml
 
-# Plot and CAM outputs
+# ==========================================
+# KiCad - Plot, CAM & 3D Exporte
+# ==========================================
 *.gbr
 *.gbo
 *.gbs
@@ -27,33 +39,52 @@
 *.pdf
 *.svg
 *.ps
+*.plt
+*.step
+*.stp
+*.wrl
+*.3shape
+*.rpt
 
-# Netlist and BOM
-*.net
-*.csv
-*.xml
+# Export-Verzeichnisse
+production/
+output/
+gerbers/
+fabrication-toolkit-options.json
 
-# Cache and precompiled files
+# ==========================================
+# KiCad - Cache & Editorkonfigurationen
+# ==========================================
 *.cache.lib
 *.kicad_prl
 fp-info-cache
-
-# Project-specific libraries (optional)
 *.lib
 *.mod
 *.cmp
-sym-lib-table
-fp-lib-table
-
-# Editor config (optional)
 *.pro
 *.pro.user
 *.kicad_wks
 *.kicad_sym
 *.kicad_mod
 
-# Output directories
-production/
-output/
+# Hinweis: 'sym-lib-table' und 'fp-lib-table' wurden bewusst 
+# weggelassen, damit lokale Bauteil-Bibliotheken im Git bleiben.
+
+# ==========================================
+# PlatformIO & ESP-IDF
+# ==========================================
+.pio/
+.pioenvs/
+.piolibdeps/
 build/
-gerbers/
+sdkconfig
+sdkconfig.old
+
+# ==========================================
+# VS Code, Compiler-Cache & Tools
+# ==========================================
+.vscode/
+.cache/
+.clangd
+compile_commands.json
+

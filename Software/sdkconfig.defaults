@@ -1,0 +1,22 @@
+# =============================================================
+# Power Management
+# =============================================================
+CONFIG_PM_ENABLE=y
+CONFIG_PM_DFS_INIT_AUTO=y
+
+# Tickless idle – required for automatic Light Sleep
+CONFIG_FREERTOS_USE_TICKLESS_IDLE=y
+CONFIG_FREERTOS_IDLE_TASK_STACKSIZE=1536
+
+# Do NOT power down flash during sleep (safer default)
+CONFIG_ESP_SLEEP_POWER_DOWN_FLASH=n
+
+# =============================================================
+# Logging
+# =============================================================
+CONFIG_LOG_DEFAULT_LEVEL_INFO=y
+
+# =============================================================
+# NVS
+# =============================================================
+CONFIG_NVS_ENCRYPTION=n
