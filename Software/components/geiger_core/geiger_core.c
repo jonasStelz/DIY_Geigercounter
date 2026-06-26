@@ -53,7 +53,6 @@ void geiger_core_task(void *arg)
     (void)arg;
 
     TickType_t last_wake = xTaskGetTickCount();
-
     ESP_LOGI(TAG, "task started");
 
     while (1) {

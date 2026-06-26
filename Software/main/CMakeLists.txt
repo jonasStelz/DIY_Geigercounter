@@ -8,4 +8,6 @@ idf_component_register(
         geiger_config
         esp_event
         geiger_core
+        button_handler
+        lcd_hd44780
 )
