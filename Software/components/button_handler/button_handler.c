@@ -35,7 +35,6 @@
 
 #include "driver/gpio.h"
 #include "esp_log.h"
-#include "esp_event.h"
 
 #include "app_types.h"
 #include "geiger_config.h"
@@ -217,8 +216,7 @@ void button_handler_task(void *arg)
              * APP_EVENT_LCD_WAKE is fired on every press – if the LCD is
              * already on, the handler treats it as a no-op.
              */
-            esp_event_post(APP_EVENTS, (int32_t)APP_EVENT_LCD_WAKE,
-                           NULL, 0, pdMS_TO_TICKS(10));
+            app_events_post(APP_EVENT_LCD_WAKE);
 
             ESP_LOGD(TAG, "GPIO%"PRIu32" PRESS", evt.gpio_num);
         } else {
@@ -232,13 +230,11 @@ void button_handler_task(void *arg)
                 if (held_ticks >= long_press_ticks) {
                     ESP_LOGI(TAG, "GPIO%"PRIu32" LONG press (%"PRIu32" ms)",
                              evt.gpio_num, held_ms);
-                    esp_event_post(APP_EVENTS, (int32_t)long_ev,
-                                   NULL, 0, pdMS_TO_TICKS(10));
+                    app_events_post(long_ev);
                 } else {
                     ESP_LOGI(TAG, "GPIO%"PRIu32" SHORT press (%"PRIu32" ms)",
                              evt.gpio_num, held_ms);
-                    esp_event_post(APP_EVENTS, (int32_t)short_ev,
-                                   NULL, 0, pdMS_TO_TICKS(10));
+                    app_events_post(short_ev);
                 }
             }
         }

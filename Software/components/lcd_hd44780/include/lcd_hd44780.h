@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdbool.h>
 #include <stdint.h>
 #include "esp_err.h"
 
@@ -37,6 +38,9 @@ esp_err_t lcd_reinit(void);
 /* Hard power control via GPIO21. */
 void lcd_power_on(void);
 void lcd_power_off(void);
+
+/* Returns true if the LCD is currently powered and operational. */
+bool lcd_is_on(void);
 
 /* Soft backlight control via PCF8574 bit 3. */
 void lcd_backlight_on(void);

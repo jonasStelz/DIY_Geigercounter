@@ -10,4 +10,6 @@ idf_component_register(
         geiger_core
         button_handler
         lcd_hd44780
+        ui_menu
+        driver
 )

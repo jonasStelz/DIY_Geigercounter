@@ -74,3 +74,11 @@ typedef enum {
     APP_STATE_LCD_OFF,
     APP_STATE_ALARM,
 } app_state_t;
+
+/* ============================================================
+ * Event posting helper
+ * Posts an APP_EVENTS event with no data payload.
+ * Defined in app_types.c so any component can call it without
+ * depending on main/.
+ * ============================================================ */
+esp_err_t app_events_post(app_event_id_t event_id);

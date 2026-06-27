@@ -1,40 +1,45 @@
 #pragma once
 
+#include <stdbool.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 #include "esp_err.h"
 #include "app_types.h"
 
 /*
- * ui_menu – LCD screen manager and menu state machine.
+ * ui_menu  –  LCD screen manager and menu state machine.
  *
- * Screens (cycled with SW1 short press):
+ * Screens (SW1 short = next, wraps):
+ *   0  Dashboard     Live counts, CPM, µSv/h, power indicator
+ *   1  Statistics    Session avg + max CPM and µSv/h
+ *   2  Alarm         Mode (OFF/CPM/µSv/h) + threshold
+ *   3  Audio & WiFi  Buzzer toggle, Wi-Fi status
  *
- *   Screen 0 – Dashboard
- *     Line 0: "Count: <lifetime>  <cpm> cpm"
- *     Line 1: "<usvh_ema> µSv/h  [U] or [B]"
- *
- *   Screen 1 – Statistics
- *     Uptime, avg CPM, avg µSv/h, max CPM, max µSv/h.
- *
- *   Screen 2 – Alarm Settings
- *     Mode (OFF / CPM / µSv/h) + threshold.
- *     SW2: adjust threshold. SW2 long: change mode.
- *
- *   Screen 3 – Audio & Wi-Fi
- *     Buzzer on/off. Wi-Fi status.
- *     SW2: toggle buzzer.
- *
- * Power status injection:
+ * Power source injection:
  *   The UI does not import power_monitor directly.
- *   Instead, the caller registers a provider callback so the UI can
- *   query the current power source for the status indicator.
+ *   Register a callback that returns the current power_source_t.
+ *   Called once per screen refresh to update the status indicator.
+ *
+ * Buzzer state:
+ *   Toggled by SW2 on the Audio & Wi-Fi screen.
+ *   Queried by the buzzer task (Step 8) via ui_menu_buzzer_enabled().
  */
 
-/* Register a function that returns the current power source. */
+/* Callback type: returns current power source (registered by power_monitor). */
 typedef power_source_t (*power_provider_fn_t)(void);
+
+/* Register the power source callback (call before ui_menu_task starts). */
 void ui_menu_register_power_provider(power_provider_fn_t fn);
 
-/* Initialise screen state and subscribe to APP_EVENTS. */
+/* Returns true if the buzzer is currently enabled in the menu. */
+bool ui_menu_buzzer_enabled(void);
+
+/* Returns the FreeRTOS task handle (valid after ui_menu_task() starts).
+ * Used by power_manager (Step 8) for vTaskSuspend() / vTaskResume(). */
+TaskHandle_t ui_menu_get_task_handle(void);
+
+/* Subscribe to APP_EVENTS and initialise menu state. */
 esp_err_t ui_menu_init(void);
 
-/* FreeRTOS task – refreshes the LCD at ~4 Hz. Priority: TASK_PRIO_UI. */
+/* FreeRTOS task – 4 Hz LCD refresh. Priority: TASK_PRIO_UI. */
 void ui_menu_task(void *arg);

@@ -65,49 +65,58 @@ static esp_err_t pcf8574_write(uint8_t val)
 
 /* ── HD44780 4-bit nibble + byte helpers ──────────────────────────────── */
 
-/*
- * Send one nibble (upper 4 bits of `nibble` are the data bits).
- * `rs` is either 0 (command) or LCD_RS_BIT (data).
- * An ENABLE pulse is generated: EN high → delay → EN low.
- * I2C transfer latency (~100 µs @100 kHz) satisfies the 450 ns hold time.
- */
-static void lcd_write_nibble(uint8_t nibble, uint8_t rs)
-{
-    uint8_t bl   = s_bl ? LCD_BACKLIGHT_BIT : 0;
-    uint8_t base = (nibble & 0xF0) | bl | rs;   /* RW always 0 */
+/* ── HD44780 4-bit byte helper ────────────────────────────────────────── */
 
-    pcf8574_write(base | LCD_ENABLE_BIT);   /* EN high – controller latches on falling edge */
-    pcf8574_write(base);                    /* EN low  – latch                              */
-}
-
-/*
- * Send a full byte as two nibbles (high nibble first – 4-bit mode).
- * A 2 ms delay after the second nibble covers the longest HD44780
- * execution time (clear / home = 1.52 ms).
+/**
+ * @brief Sends a full byte as two nibbles (high nibble first) in a single,
+ * atomic I2C transaction. This ensures precise timing for the 
+ * HD44780's Enable (EN) pulse edges.
  */
 static void lcd_send_byte(uint8_t byte, uint8_t rs)
 {
-    lcd_write_nibble( byte & 0xF0,        rs);   /* high nibble */
-    lcd_write_nibble((byte << 4) & 0xF0,  rs);   /* low nibble  */
-    vTaskDelay(pdMS_TO_TICKS(2));
+    uint8_t bl = s_bl ? LCD_BACKLIGHT_BIT : 0;
+    
+    uint8_t high = byte & 0xF0;
+    uint8_t low  = (byte << 4) & 0xF0;
+
+    /* Pack the 4-step sequence into a single array:
+     * 1. High nibble with EN high
+     * 2. High nibble with EN low  (latches high nibble)
+     * 3. Low nibble with EN high
+     * 4. Low nibble with EN low   (latches low nibble)
+     */
+    uint8_t data[4];
+    data[0] = high | rs | bl | LCD_ENABLE_BIT;
+    data[1] = high | rs | bl;
+    data[2] = low  | rs | bl | LCD_ENABLE_BIT;
+    data[3] = low  | rs | bl;
+
+    /* Transmit all 4 bytes in one fast, burst I2C transfer */
+    i2c_master_transmit(s_dev, data, sizeof(data), 10 /* ms timeout */);
+
+    /* Allow execution time for the HD44780 to process the command */
+    //vTaskDelay(pdMS_TO_TICKS(10));  //not necessary
 }
 
-static inline void lcd_cmd(uint8_t cmd) { lcd_send_byte(cmd,        0);          }
+static inline void lcd_cmd(uint8_t cmd) { lcd_send_byte(cmd, 0); }
 static inline void lcd_dat(uint8_t  c)  { lcd_send_byte(c,   LCD_RS_BIT); }
+
 
 /* ── HD44780 initialisation sequence ─────────────────────────────────── */
 
-/* Verified working sequence from baseline.c – do not modify. */
+/* Verified working sequence from baseline.c – do not modify.
+ * Note: VDD rise-time delay (50 ms) must be completed by the caller
+ * before invoking this function (lcd_init waits once; lcd_reinit inherits
+ * the wait from lcd_power_on). */
 static void hd44780_init_sequence(void)
 {
-    vTaskDelay(pdMS_TO_TICKS(50));  /* VDD rise time                      */
     lcd_cmd(0x33);                  /* Init – forces 8-bit mode twice      */
     lcd_cmd(0x32);                  /* Switch to 4-bit mode                */
     lcd_cmd(0x28);                  /* 2 lines, 5×8 font                   */
     lcd_cmd(0x0C);                  /* Display ON, cursor OFF, blink OFF   */
     lcd_cmd(0x06);                  /* Entry mode: increment, no shift     */
     lcd_cmd(0x01);                  /* Clear display                       */
-    vTaskDelay(pdMS_TO_TICKS(5));   /* Clear command takes up to 1.52 ms  */
+    vTaskDelay(pdMS_TO_TICKS(10));  /* Clear command takes up to 1.52 ms  */
 }
 
 /* ── I2C bus/device lifecycle ─────────────────────────────────────────── */
@@ -188,6 +197,7 @@ esp_err_t lcd_init(void)
     if (ret != ESP_OK) return ret;
 
     s_bl = true;
+    vTaskDelay(pdMS_TO_TICKS(LCD_POWER_STABILIZE_MS)); /* VDD rise time (cold boot) */
     hd44780_init_sequence();
     s_powered = true;
 
@@ -240,7 +250,7 @@ void lcd_power_off(void)
     /* Extinguish backlight gracefully */
     uint8_t all_low = 0x00;
     i2c_master_transmit(s_dev, &all_low, 1, 10);
-    vTaskDelay(pdMS_TO_TICKS(2));
+    vTaskDelay(pdMS_TO_TICKS(10));
 
     i2c_bus_destroy();
 
@@ -274,7 +284,7 @@ void lcd_clear(void)
 {
     if (!s_powered) return;
     lcd_cmd(0x01);
-    vTaskDelay(pdMS_TO_TICKS(2));
+    vTaskDelay(pdMS_TO_TICKS(10));
 }
 
 void lcd_set_cursor(uint8_t col, uint8_t row)
@@ -302,6 +312,13 @@ void lcd_print_char(char c)
 {
     if (!s_powered) return;
     lcd_dat((uint8_t)c);
+}
+
+/* ── Power state query ────────────────────────────────────────────────── */
+
+bool lcd_is_on(void)
+{
+    return s_powered;
 }
 
 /* ── Mutex ────────────────────────────────────────────────────────────── */

@@ -17,8 +17,8 @@
 #define GPIO_BUZZER             11  /* Passive piezo via NPN transistor – HIGH = active          */
 #define GPIO_HV_ENABLE          12  /* ICM7555 oscillator enable         – HIGH = HV ON          */
 #define GPIO_LCD_POWER          21  /* LCD ground-path MOSFET (low-side) – HIGH = LCD on         */
-#define GPIO_SW1_MENU           9   /* Menu button   – active LOW, external pull-up              */
-#define GPIO_SW2_SELECT         10  /* Select button – active LOW, external pull-up              */
+#define GPIO_SW1_MENU           9   /* Menu button   – active HIGH, external pull-down            */
+#define GPIO_SW2_SELECT         10  /* Select button – active HIGH, external pull-down            */
 #define GPIO_I2C_SCL            13
 #define GPIO_I2C_SDA            14
 #define GPIO_HV_ADC             2   /* ADC1_CH1: HV feedback voltage                            */
@@ -111,7 +111,7 @@
  * FreeRTOS Task Stack Sizes (bytes)
  * ============================================================ */
 #define TASK_STACK_GEIGER_CORE  4096
-#define TASK_STACK_BUTTON       2048
+#define TASK_STACK_BUTTON       3072
 #define TASK_STACK_UI           4096
 #define TASK_STACK_HV_CONTROL   2048
 #define TASK_STACK_BUZZER       2048
