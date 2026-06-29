@@ -42,6 +42,7 @@
 #include "driver/gpio.h"
 #include "driver/i2c_master.h"
 #include "esp_log.h"
+#include "esp_rom_sys.h"
 
 #include "geiger_config.h"
 #include "lcd_hd44780.h"
@@ -60,7 +61,16 @@ static bool                     s_bl      = true;   /* current backlight state *
 
 static esp_err_t pcf8574_write(uint8_t val)
 {
-    return i2c_master_transmit(s_dev, &val, 1, 10 /* ms */);
+    esp_err_t ret = i2c_master_transmit(s_dev, &val, 1, 100 /* ms */);
+    /*
+     * Brief busy-wait after each I2C transaction.
+     * The PCF8574 releases SDA/SCL slowly when bus capacitance is high;
+     * without a gap the next transaction can start before the lines are
+     * fully pulled high, causing a spurious NACK.
+     * 50 µs ≈ 5 clock periods at 100 kHz – well within the PCF8574 spec.
+     */
+    esp_rom_delay_us(50);
+    return ret;
 }
 
 /* ── HD44780 4-bit nibble + byte helpers ──────────────────────────────── */
@@ -92,7 +102,7 @@ static void lcd_send_byte(uint8_t byte, uint8_t rs)
     data[3] = low  | rs | bl;
 
     /* Transmit all 4 bytes in one fast, burst I2C transfer */
-    i2c_master_transmit(s_dev, data, sizeof(data), 10 /* ms timeout */);
+    i2c_master_transmit(s_dev, data, sizeof(data), 100 /* ms timeout */);
 
     /* Allow execution time for the HD44780 to process the command */
     //vTaskDelay(pdMS_TO_TICKS(10));  //not necessary
@@ -130,7 +140,13 @@ static esp_err_t i2c_bus_create(void)
         .clk_source        = I2C_CLK_SRC_DEFAULT,
         .glitch_ignore_cnt = 7,
         .flags = {
-            .enable_internal_pullup = false, /* External pull-ups on PCB */
+            /*
+             * Enable internal pull-ups in addition to the external ones.
+             * The internal pull-ups (~45 kΩ) run in parallel with the PCB
+             * pull-ups, slightly strengthening the bus and helping the lines
+             * recover faster between consecutive transactions.
+             */
+            .enable_internal_pullup = true,
         },
     };
     esp_err_t ret = i2c_new_master_bus(&bus_cfg, &s_bus);
@@ -249,7 +265,7 @@ void lcd_power_off(void)
 
     /* Extinguish backlight gracefully */
     uint8_t all_low = 0x00;
-    i2c_master_transmit(s_dev, &all_low, 1, 10);
+    i2c_master_transmit(s_dev, &all_low, 1, 100);
     vTaskDelay(pdMS_TO_TICKS(10));
 
     i2c_bus_destroy();

@@ -34,6 +34,15 @@ void ui_menu_register_power_provider(power_provider_fn_t fn);
 /* Returns true if the buzzer is currently enabled in the menu. */
 bool ui_menu_buzzer_enabled(void);
 
+/* Alarm setting getters – read by geiger_core for threshold comparison. */
+alarm_mode_t ui_menu_get_alarm_mode(void);
+uint32_t     ui_menu_get_alarm_threshold_cpm(void);
+float        ui_menu_get_alarm_threshold_usvh(void);
+
+/* Alarm runtime state – read by the buzzer task. */
+bool ui_menu_is_alarm_active(void);
+bool ui_menu_is_alarm_acknowledged(void);
+
 /* Returns the FreeRTOS task handle (valid after ui_menu_task() starts).
  * Used by power_manager (Step 8) for vTaskSuspend() / vTaskResume(). */
 TaskHandle_t ui_menu_get_task_handle(void);

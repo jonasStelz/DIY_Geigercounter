@@ -3,27 +3,24 @@
 #include "esp_err.h"
 
 /*
- * buzzer – LEDC PWM driver for the passive piezo element.
+ * buzzer  –  Passive piezo click driver via LEDC PWM.
  *
- * The Geiger core never touches LEDC hardware directly.
- * Event-driven flow:
+ * Triggered by APP_EVENT_PULSE events from the event loop.
+ * Mute state is read from ui_menu_buzzer_enabled().
  *
- *   geiger_core_task  →  APP_EVENT_PULSE  →  buzzer_task  →  LEDC click
+ * LEDC parameters (all in geiger_config.h):
+ *   GPIO11, 750 Hz, 13-bit resolution, 50 % duty, 10 ms click.
  *
- * Light Sleep compatibility:
- *   Before enabling LEDC output:  acquire ESP_PM_NO_LIGHT_SLEEP lock.
- *   After click completes:        release lock.
- *   (Prevents LEDC clock gating during sound generation.)
- *
- * Buzzer can be globally muted via buzzer_set_enabled().
+ * PM lock (Step 8):
+ *   ESP_PM_NO_LIGHT_SLEEP is acquired before each click and released
+ *   after to prevent the LEDC clock from being gated during playback.
+ *   The lock calls are present but commented out until Step 8 activates
+ *   power management.
  */
 
-/* Initialise LEDC timer and channel. GPIO11 output defaults to LOW. */
+/* Register APP_EVENT_PULSE handler, configure LEDC, create click queue. */
 esp_err_t buzzer_init(void);
 
-/* FreeRTOS task – waits for APP_EVENT_PULSE. Priority: TASK_PRIO_BUZZER. */
+/* FreeRTOS task – blocks on internal queue, plays one click per entry.
+ * Priority: TASK_PRIO_BUZZER.  Stack: TASK_STACK_BUZZER. */
 void buzzer_task(void *arg);
-
-/* Enable / disable click output (persisted preference, toggled via UI). */
-void buzzer_set_enabled(bool enabled);
-bool buzzer_is_enabled(void);

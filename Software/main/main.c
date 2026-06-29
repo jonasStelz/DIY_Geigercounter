@@ -8,6 +8,8 @@
 #include "button_handler.h"
 #include "lcd_hd44780.h"
 #include "ui_menu.h"
+#include "buzzer.h"
+#include "hv_control.h"
 #include "geiger_config.h"
 
 static const char *TAG = "MAIN";
@@ -67,10 +69,20 @@ void app_main(void)
     /* Step 5: LCD driver. */
     ESP_ERROR_CHECK(lcd_init());
 
+    /* Step 5: Buzzer. */
+    ESP_ERROR_CHECK(buzzer_init());
+    xTaskCreate(buzzer_task, "buzzer_task",
+                TASK_STACK_BUZZER, NULL, TASK_PRIO_BUZZER, NULL);
+
     /* Step 6: Menu system. */
     ESP_ERROR_CHECK(ui_menu_init());
     xTaskCreate(ui_menu_task, "ui_task",
                 TASK_STACK_UI, NULL, TASK_PRIO_UI, NULL);
+
+    /* Step 7: High voltage control. */
+    ESP_ERROR_CHECK(hv_control_init());
+    xTaskCreate(hv_control_task, "hv_task",
+                TASK_STACK_HV_CONTROL, NULL, TASK_PRIO_HV_CONTROL, NULL);
 
     /* Further initialisation added in Steps 7–10. */
     while (1) {

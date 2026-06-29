@@ -49,6 +49,7 @@
 #define HV_TARGET_VOLTAGE_V     400.0f
 #define HV_HYSTERESIS_V         5.0f
 #define HV_ADC_CHANNEL_NUM      1           /* ADC1_CHANNEL_1 (GPIO2) */
+#define HV_REGULATION_PERIOD_MS 100         /* Regulation loop period – 10 Hz */
 
 /* ============================================================
  * Buzzer / LEDC PWM
@@ -88,7 +89,7 @@
  * Button Timing
  * ============================================================ */
 #define BUTTON_DEBOUNCE_MS      50
-#define BUTTON_LONG_PRESS_MS    800
+#define BUTTON_LONG_PRESS_MS    400
 
 /* ============================================================
  * NVS Persistence

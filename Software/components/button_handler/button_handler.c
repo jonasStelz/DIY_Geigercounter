@@ -189,53 +189,77 @@ void button_handler_task(void *arg)
 
         btn_state_t *s = &state[idx];
 
-        /* ---- Debounce ----
-         * Skip edges that arrive within BUTTON_DEBOUNCE_MS of the last one.
-         * edge_seen guard ensures the very first edge is never debounced away,
-         * even if the system boot tick count is close to 0. */
-        if (s->edge_seen) {
-            TickType_t since_last = evt.tick - s->last_edge_tick;
-            if (since_last < debounce_ticks) {
-                ESP_LOGD(TAG, "GPIO%"PRIu32" debounced (%"PRIu32" ms)",
-                         evt.gpio_num,
-                         (uint32_t)(since_last * portTICK_PERIOD_MS));
+        if (evt.level == 1) {
+            /* ===== RISING EDGE: button pressed (active HIGH) =====
+             *
+             * Debounce on the PRESS side only: ignore rising edges that
+             * arrive within BUTTON_DEBOUNCE_MS of the previous edge.
+             * This filters mechanical contact bounce on press without
+             * risking the loss of a click on the release side.
+             *
+             * edge_seen guard: prevents the very first press from being
+             * swallowed when the boot tick count is still close to 0. */
+            if (s->edge_seen) {
+                TickType_t since_last = evt.tick - s->last_edge_tick;
+                if (since_last < debounce_ticks) {
+                    ESP_LOGD(TAG, "GPIO%"PRIu32" press debounced (%"PRIu32" ms)",
+                             evt.gpio_num,
+                             (uint32_t)(since_last * portTICK_PERIOD_MS));
+                    continue;
+                }
+            }
+            s->edge_seen      = true;
+            s->last_edge_tick = evt.tick;
+            s->pressed        = true;
+            s->press_tick     = evt.tick;
+
+            /* Notify UI/LCD so it can wake up if powered off */
+            app_events_post(APP_EVENT_LCD_WAKE);
+            ESP_LOGD(TAG, "GPIO%"PRIu32" PRESS", evt.gpio_num);
+
+        } else {
+            /* ===== FALLING EDGE: button released (active HIGH) =====
+             *
+             * Two-tier release handling:
+             *
+             * Tier 1 – Press-side bounce filter:
+             *   If held_time < BUTTON_DEBOUNCE_MS the falling edge is
+             *   mechanical bounce from the press itself (contact prelled
+             *   back immediately).  Ignore it – keep s->pressed = true so
+             *   the real release is still detected later.
+             *
+             * Tier 2 – Valid release:
+             *   held_time >= BUTTON_DEBOUNCE_MS → genuine release.
+             *   Classify as SHORT (< LONG_PRESS_MS) or LONG.
+             *
+             * This avoids both problems:
+             *   - 0 ms SHORT presses from press-side bounce  (Tier 1)
+             *   - Swallowed clicks for fast presses ≥ 50 ms  (Tier 2) */
+            if (!s->pressed) {
+                continue;   /* spurious release – not in pressed state */
+            }
+
+            TickType_t held_ticks = evt.tick - s->press_tick;
+            uint32_t   held_ms    = (uint32_t)(held_ticks * portTICK_PERIOD_MS);
+
+            if (held_ticks < debounce_ticks) {
+                /* Press-side bounce – ignore, stay in PRESSED state */
+                ESP_LOGD(TAG, "GPIO%"PRIu32" bounce filtered (%"PRIu32" ms)",
+                         evt.gpio_num, held_ms);
                 continue;
             }
-        }
-        s->edge_seen      = true;
-        s->last_edge_tick = evt.tick;
 
-        /* ---- State machine ---- */
-        if (evt.level == 1) {
-            /* ===== RISING EDGE: button pressed (active HIGH) ===== */
-            s->pressed    = true;
-            s->press_tick = evt.tick;
+            s->last_edge_tick = evt.tick;
+            s->pressed        = false;
 
-            /*
-             * Notify the UI / LCD that a button was touched.
-             * APP_EVENT_LCD_WAKE is fired on every press – if the LCD is
-             * already on, the handler treats it as a no-op.
-             */
-            app_events_post(APP_EVENT_LCD_WAKE);
-
-            ESP_LOGD(TAG, "GPIO%"PRIu32" PRESS", evt.gpio_num);
-        } else {
-            /* ===== FALLING EDGE: button released (active HIGH) ===== */
-            if (s->pressed) {
-                s->pressed = false;
-
-                TickType_t held_ticks = evt.tick - s->press_tick;
-                uint32_t   held_ms    = (uint32_t)(held_ticks * portTICK_PERIOD_MS);
-
-                if (held_ticks >= long_press_ticks) {
-                    ESP_LOGI(TAG, "GPIO%"PRIu32" LONG press (%"PRIu32" ms)",
-                             evt.gpio_num, held_ms);
-                    app_events_post(long_ev);
-                } else {
-                    ESP_LOGI(TAG, "GPIO%"PRIu32" SHORT press (%"PRIu32" ms)",
-                             evt.gpio_num, held_ms);
-                    app_events_post(short_ev);
-                }
+            if (held_ticks >= long_press_ticks) {
+                ESP_LOGI(TAG, "GPIO%"PRIu32" LONG press (%"PRIu32" ms)",
+                         evt.gpio_num, held_ms);
+                app_events_post(long_ev);
+            } else {
+                ESP_LOGI(TAG, "GPIO%"PRIu32" SHORT press (%"PRIu32" ms)",
+                         evt.gpio_num, held_ms);
+                app_events_post(short_ev);
             }
         }
     }

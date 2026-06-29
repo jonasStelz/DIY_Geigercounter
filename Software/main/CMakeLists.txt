@@ -10,6 +10,8 @@ idf_component_register(
         geiger_core
         button_handler
         lcd_hd44780
+        buzzer
         ui_menu
+        hv_control
         driver
 )

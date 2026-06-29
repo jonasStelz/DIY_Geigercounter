@@ -57,7 +57,14 @@ typedef struct {
     float        alarm_threshold_usvh;
     bool         buzzer_enabled;
     bool         just_woke;
+    bool         alarm_inc;  /* true = increment, false = decrement */
 } menu_state_t;
+
+/* Alarm runtime state – written by event handlers, read by task + getters */
+typedef struct {
+    bool active;        /* value currently above threshold */
+    bool acknowledged;  /* user pressed SW1 to suppress display/sound */
+} alarm_rt_t;
 
 static menu_state_t s_state = {
     .screen               = SCREEN_DASHBOARD,
@@ -67,6 +74,7 @@ static menu_state_t s_state = {
     .alarm_threshold_usvh = 1.0f,
     .buzzer_enabled       = true,
     .just_woke            = false,
+    .alarm_inc            = true,
 };
 
 static SemaphoreHandle_t   s_state_mutex    = NULL;
@@ -74,6 +82,11 @@ static SemaphoreHandle_t   s_wake_sem       = NULL;  /* binary: signals immediat
 static TaskHandle_t        s_task_handle    = NULL;
 static power_provider_fn_t s_power_provider = NULL;
 static uint8_t             s_stats_tick     = 0;     /* counter for stats subview flip   */
+static alarm_rt_t          s_alarm_rt       = {0};   /* alarm runtime state              */
+static uint8_t             s_alarm_blink    = 0;     /* blink counter for alarm display  */
+
+/* Forward declaration – defined below with the other screen renderers */
+static void draw_alarm_warning(const geiger_data_t *d);
 
 /* ── LCD line formatter ───────────────────────────────────────────────── */
 
@@ -147,14 +160,18 @@ static void draw_alarm(const menu_state_t *st)
         case ALARM_MODE_USVH: mode_str = "uSv/h";  break;
         default:              mode_str = "???  ";  break;
     }
-    write_line(0, "Alarm:  %s", mode_str);
+    /* Row 0: mode + current direction indicator (+ or -).
+     * "Alarm:" (6) + mode_str (5) + "  [" (3) + char (1) + "]" (1) = 16 chars */
+    write_line(0, "Alarm:%-5s  [%c]", mode_str, st->alarm_inc ? '+' : '-');
 
     if (st->alarm_mode == ALARM_MODE_USVH) {
         float v = st->alarm_threshold_usvh > 99.9f ? 99.9f : st->alarm_threshold_usvh;
         write_line(1, "Limit: %5.2fuSvh", v);
-    } else {
+    } else if (st->alarm_mode == ALARM_MODE_CPM) {
         uint32_t v = st->alarm_threshold_cpm > 99999 ? 99999 : st->alarm_threshold_cpm;
         write_line(1, "Limit: %5" PRIu32 " cpm", v);
+    } else {
+        write_line(1, "");   /* OFF – no threshold shown */
     }
 }
 
@@ -162,6 +179,24 @@ static void draw_audio_wifi(const menu_state_t *st)
 {
     write_line(0, "Buzzer:  %-7s", st->buzzer_enabled ? "ON" : "OFF");
     write_line(1, "WiFi:  DISABLED");   /* placeholder – Step 10 */
+}
+
+/* ── Alarm warning screen ─────────────────────────────────────────────── */
+
+static void draw_alarm_warning(const geiger_data_t *d)
+{
+    write_line(0, "!!!!  ALARM  !!!!");
+
+    alarm_mode_t mode = s_state.alarm_mode;
+    if (mode == ALARM_MODE_CPM) {
+        uint32_t cpm = d->cpm > 99999 ? 99999 : d->cpm;
+        write_line(1, ">> %5" PRIu32 " cpm    <<", cpm);
+    } else if (mode == ALARM_MODE_USVH) {
+        float usv = d->usvh_ema > 99.999f ? 99.999f : d->usvh_ema;
+        write_line(1, ">> %6.3f uSv/h <<", usv);
+    } else {
+        write_line(1, "");
+    }
 }
 
 /* ── Dispatch ─────────────────────────────────────────────────────────── */
@@ -203,20 +238,71 @@ static void on_lcd_wake(void *arg, esp_event_base_t base,
     xSemaphoreGive(s_state_mutex);
 }
 
+/* ── Alarm event handlers ─────────────────────────────────────────────── */
+
+static void on_alarm_trigger(void *arg, esp_event_base_t base,
+                             int32_t id, void *data)
+{
+    (void)arg; (void)base; (void)id; (void)data;
+    xSemaphoreTake(s_state_mutex, portMAX_DELAY);
+    s_alarm_rt.active = true;
+    /* acknowledged stays as-is: user must re-ack for each new alarm event */
+    xSemaphoreGive(s_state_mutex);
+}
+
+static void on_alarm_clear(void *arg, esp_event_base_t base,
+                           int32_t id, void *data)
+{
+    (void)arg; (void)base; (void)id; (void)data;
+    xSemaphoreTake(s_state_mutex, portMAX_DELAY);
+    s_alarm_rt.active       = false;
+    s_alarm_rt.acknowledged = false;  /* reset ack so next alarm fires fresh */
+    s_alarm_blink           = 0;
+    xSemaphoreGive(s_state_mutex);
+    ESP_LOGI("UI", "alarm cleared");
+}
+
 static void on_sw1_short(void *arg, esp_event_base_t base,
                          int32_t id, void *data)
 {
     (void)arg; (void)base; (void)id; (void)data;
 
     xSemaphoreTake(s_state_mutex, portMAX_DELAY);
+
+    /*
+     * Alarm acknowledgement has ABSOLUTE priority – checked BEFORE just_woke.
+     *
+     * Bug history: just_woke was checked first.  When the LCD was off during
+     * an alarm, the user's first SW1 press caused on_lcd_wake to set
+     * just_woke=true.  Then on_sw1_short returned early on the just_woke guard
+     * and the alarm check was never reached.  Every press navigated the menu
+     * instead of acknowledging.
+     *
+     * Fix: check alarm first.  Consume the entire press (clear just_woke too)
+     * so no navigation side-effect occurs alongside the acknowledgement.
+     */
+    if (s_alarm_rt.active && !s_alarm_rt.acknowledged) {
+        s_alarm_rt.acknowledged = true;
+        s_alarm_blink           = 0;
+        s_state.just_woke       = false;
+        ESP_LOGI(TAG, "alarm acknowledged");
+        xSemaphoreGive(s_state_mutex);
+        return;
+    }
+
     if (s_state.just_woke) {
         s_state.just_woke = false;
-    } else {
-        s_state.prev_screen = s_state.screen;
-        s_state.screen = (screen_id_t)((s_state.screen + 1) % SCREEN_COUNT);
-        s_stats_tick = 0;   /* reset sub-view on screen entry */
-        ESP_LOGI(TAG, "screen → %d", (int)s_state.screen);
+        xSemaphoreGive(s_state_mutex);
+        return;
     }
+
+    /* SW1 short = next screen on all screens */
+    s_state.prev_screen = s_state.screen;
+    s_state.screen      = (screen_id_t)((s_state.screen + 1) % SCREEN_COUNT);
+    s_state.alarm_inc   = true;   /* reset direction when leaving alarm screen */
+    s_stats_tick        = 0;
+    ESP_LOGI(TAG, "screen → %d", (int)s_state.screen);
+
     xSemaphoreGive(s_state_mutex);
 }
 
@@ -236,13 +322,21 @@ static void on_sw2_short(void *arg, esp_event_base_t base,
     switch (s_state.screen) {
         case SCREEN_ALARM:
             if (s_state.alarm_mode == ALARM_MODE_CPM) {
-                s_state.alarm_threshold_cpm += ALARM_CPM_STEP;
-                if (s_state.alarm_threshold_cpm > ALARM_CPM_MAX)
-                    s_state.alarm_threshold_cpm = ALARM_CPM_STEP;
+                if (s_state.alarm_inc) {
+                    if (s_state.alarm_threshold_cpm < ALARM_CPM_MAX)
+                        s_state.alarm_threshold_cpm += ALARM_CPM_STEP;
+                } else {
+                    if (s_state.alarm_threshold_cpm > ALARM_CPM_STEP)
+                        s_state.alarm_threshold_cpm -= ALARM_CPM_STEP;
+                }
             } else if (s_state.alarm_mode == ALARM_MODE_USVH) {
-                s_state.alarm_threshold_usvh += ALARM_USVH_STEP;
-                if (s_state.alarm_threshold_usvh > ALARM_USVH_MAX)
-                    s_state.alarm_threshold_usvh = ALARM_USVH_STEP;
+                if (s_state.alarm_inc) {
+                    if (s_state.alarm_threshold_usvh < ALARM_USVH_MAX - 0.001f)
+                        s_state.alarm_threshold_usvh += ALARM_USVH_STEP;
+                } else {
+                    if (s_state.alarm_threshold_usvh > ALARM_USVH_STEP + 0.001f)
+                        s_state.alarm_threshold_usvh -= ALARM_USVH_STEP;
+                }
             }
             break;
         case SCREEN_AUDIO_WIFI:
@@ -251,6 +345,32 @@ static void on_sw2_short(void *arg, esp_event_base_t base,
             break;
         default:
             break;
+    }
+
+    xSemaphoreGive(s_state_mutex);
+}
+
+/*
+ * SW1 long – toggle threshold adjustment direction on the alarm screen.
+ * Switches between increment (+) and decrement (-).
+ * SW2 short then adjusts in the selected direction.
+ */
+static void on_sw1_long(void *arg, esp_event_base_t base,
+                        int32_t id, void *data)
+{
+    (void)arg; (void)base; (void)id; (void)data;
+
+    xSemaphoreTake(s_state_mutex, portMAX_DELAY);
+
+    if (s_state.just_woke) {
+        s_state.just_woke = false;
+        xSemaphoreGive(s_state_mutex);
+        return;
+    }
+
+    if (s_state.screen == SCREEN_ALARM) {
+        s_state.alarm_inc = !s_state.alarm_inc;
+        ESP_LOGI(TAG, "alarm dir → %s", s_state.alarm_inc ? "INC" : "DEC");
     }
 
     xSemaphoreGive(s_state_mutex);
@@ -297,6 +417,46 @@ bool ui_menu_buzzer_enabled(void)
     return en;
 }
 
+alarm_mode_t ui_menu_get_alarm_mode(void)
+{
+    xSemaphoreTake(s_state_mutex, portMAX_DELAY);
+    alarm_mode_t m = s_state.alarm_mode;
+    xSemaphoreGive(s_state_mutex);
+    return m;
+}
+
+uint32_t ui_menu_get_alarm_threshold_cpm(void)
+{
+    xSemaphoreTake(s_state_mutex, portMAX_DELAY);
+    uint32_t v = s_state.alarm_threshold_cpm;
+    xSemaphoreGive(s_state_mutex);
+    return v;
+}
+
+float ui_menu_get_alarm_threshold_usvh(void)
+{
+    xSemaphoreTake(s_state_mutex, portMAX_DELAY);
+    float v = s_state.alarm_threshold_usvh;
+    xSemaphoreGive(s_state_mutex);
+    return v;
+}
+
+bool ui_menu_is_alarm_active(void)
+{
+    xSemaphoreTake(s_state_mutex, portMAX_DELAY);
+    bool v = s_alarm_rt.active;
+    xSemaphoreGive(s_state_mutex);
+    return v;
+}
+
+bool ui_menu_is_alarm_acknowledged(void)
+{
+    xSemaphoreTake(s_state_mutex, portMAX_DELAY);
+    bool v = s_alarm_rt.acknowledged;
+    xSemaphoreGive(s_state_mutex);
+    return v;
+}
+
 TaskHandle_t ui_menu_get_task_handle(void)
 {
     return s_task_handle;
@@ -312,13 +472,19 @@ esp_err_t ui_menu_init(void)
     if (!s_wake_sem) return ESP_ERR_NO_MEM;
 
     ESP_ERROR_CHECK(esp_event_handler_register(
-        APP_EVENTS, APP_EVENT_LCD_WAKE,         on_lcd_wake,  NULL));
+        APP_EVENTS, APP_EVENT_LCD_WAKE,         on_lcd_wake,      NULL));
     ESP_ERROR_CHECK(esp_event_handler_register(
-        APP_EVENTS, APP_EVENT_BUTTON_SHORT_SW1, on_sw1_short, NULL));
+        APP_EVENTS, APP_EVENT_BUTTON_SHORT_SW1, on_sw1_short,     NULL));
     ESP_ERROR_CHECK(esp_event_handler_register(
-        APP_EVENTS, APP_EVENT_BUTTON_SHORT_SW2, on_sw2_short, NULL));
+        APP_EVENTS, APP_EVENT_BUTTON_LONG_SW1,  on_sw1_long,      NULL));
     ESP_ERROR_CHECK(esp_event_handler_register(
-        APP_EVENTS, APP_EVENT_BUTTON_LONG_SW2,  on_sw2_long,  NULL));
+        APP_EVENTS, APP_EVENT_BUTTON_SHORT_SW2, on_sw2_short,     NULL));
+    ESP_ERROR_CHECK(esp_event_handler_register(
+        APP_EVENTS, APP_EVENT_BUTTON_LONG_SW2,  on_sw2_long,      NULL));
+    ESP_ERROR_CHECK(esp_event_handler_register(
+        APP_EVENTS, APP_EVENT_ALARM_TRIGGER,    on_alarm_trigger, NULL));
+    ESP_ERROR_CHECK(esp_event_handler_register(
+        APP_EVENTS, APP_EVENT_ALARM_CLEAR,      on_alarm_clear,   NULL));
 
     ESP_LOGI(TAG, "initialized");
     return ESP_OK;
@@ -349,14 +515,30 @@ void ui_menu_task(void *arg)
         memset(&data, 0, sizeof(data));
         statistics_get_snapshot(&data);
 
+        /* Snapshot s_state AND s_alarm_rt under the same mutex.
+         * On the dual-core ESP32-S3, ui_menu_task (Core 1) and the event
+         * loop (Core 0) can run truly concurrently.  Reading s_alarm_rt
+         * outside the mutex means Core 1 may never see the write from
+         * on_sw1_short on Core 0 → acknowledgement appears to do nothing. */
         xSemaphoreTake(s_state_mutex, portMAX_DELAY);
         local_state = s_state;
-        /* Update prev_screen after copying so next iteration detects change */
+        alarm_rt_t local_alarm = s_alarm_rt;
         s_state.prev_screen = s_state.screen;
         xSemaphoreGive(s_state_mutex);
 
         lcd_lock();
-        redraw(&data, &local_state);
+        if (local_alarm.active && !local_alarm.acknowledged) {
+            /* Blink 1 Hz: alternate alarm warning / normal screen */
+            s_alarm_blink++;
+            if ((s_alarm_blink / 2) & 1u) {
+                draw_alarm_warning(&data);
+            } else {
+                redraw(&data, &local_state);
+            }
+        } else {
+            s_alarm_blink = 0;
+            redraw(&data, &local_state);
+        }
         lcd_unlock();
     }
 }

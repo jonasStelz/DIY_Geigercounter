@@ -25,7 +25,8 @@ typedef enum {
     APP_EVENT_BUTTON_LONG_SW2,      /* SW2 long press                              */
     APP_EVENT_LCD_WAKE,             /* Any button → LCD wakeup                     */
     APP_EVENT_LCD_SLEEP,            /* Timeout → LCD power-off                     */
-    APP_EVENT_ALARM_TRIGGER,        /* Radiation alarm threshold crossed            */
+    APP_EVENT_ALARM_TRIGGER,        /* Radiation threshold exceeded – fires every second */
+    APP_EVENT_ALARM_CLEAR,          /* Value dropped back below threshold               */
     APP_EVENT_USB_CONNECTED,        /* USB power detected                          */
     APP_EVENT_USB_DISCONNECTED,     /* USB power lost                              */
     APP_EVENT_WIFI_CONNECTED,
